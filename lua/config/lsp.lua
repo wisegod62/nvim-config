@@ -8,7 +8,7 @@ vim.diagnostic.config({
     float = { border = "rounded" },
 })
 
--- Request availible lanugage capabilities
+-- Request available language capabilities
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- =========================================
@@ -42,9 +42,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- LANGUAGE SERVER CONFIGURATION (Neovim 0.11+)
 -- ==============================================
 
+-- Python Setup
 vim.lsp.config("pyright", {
     capabilities = capabilities,
-
     settings = {
         python = {
             analysis = {
@@ -55,16 +55,15 @@ vim.lsp.config("pyright", {
         },
     },
 })
-
 vim.lsp.enable("pyright")
 
-
+-- C++ / Arduino Setup
 local clangd_caps = vim.deepcopy(capabilities)
 clangd_caps.offsetEncoding = { "utf-16" }
 
 vim.lsp.config("clangd", {
     capabilities = clangd_caps,
-
+    filetypes = { "c", "cpp", "objc", "objcpp", "arduino" },
     cmd = {
         "clangd",
         "--background-index",
@@ -72,5 +71,20 @@ vim.lsp.config("clangd", {
         "--header-insertion=never",
     },
 })
-
 vim.lsp.enable("clangd")
+
+-- NEW: Lua Setup
+vim.lsp.config("lua_ls", {
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            workspace = {
+                checkThirdParty = false, -- Stops annoying prompts about external environments
+            },
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+})
+vim.lsp.enable("lua_ls")
