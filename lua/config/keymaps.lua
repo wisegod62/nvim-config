@@ -1,32 +1,99 @@
--- Set space as the leader key
+-- =========================================
+-- LEADER
+-- =========================================
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local keymap = vim.keymap.set
 
--- Map <A-j>, <A-k>, <A-h>, <A-l> to navigate between windows in any modes
-vim.keymap.set({ "t", "i" }, "<A-h>", "<C-\\><C-n><C-w>h")
-vim.keymap.set({ "t", "i" }, "<A-j>", "<C-\\><C-n><C-w>j")
-vim.keymap.set({ "t", "i" }, "<A-k>", "<C-\\><C-n><C-w>k")
-vim.keymap.set({ "t", "i" }, "<A-l>", "<C-\\><C-n><C-w>l")
-vim.keymap.set({ "n" }, "<A-h>", "<C-w>h")
-vim.keymap.set({ "n" }, "<A-j>", "<C-w>j")
-vim.keymap.set({ "n" }, "<A-k>", "<C-w>k")
-vim.keymap.set({ "n" }, "<A-l>", "<C-w>l")
 
--- Buffer Management
-keymap("n", "<tab>", ":bnext<CR>", { desc = "Next buffer" })
-keymap("n", "<S-tab>", ":bprevious<CR>", { desc = "Previous buffer" })
+-- =========================================
+-- WINDOW NAVIGATION
+-- =========================================
 
--- Exit Terminal with <Esc>
-keymap("t", "<Esc>", "<C-\\><C-n>")
+-- Normal mode
+keymap("n", "<A-h>", "<C-w>h", {
+	desc = "Move to left window",
+})
 
--- Run Python files
-keymap("n", "<leader>rp", ":w | !python3 %<CR>", { desc = "Run Python file" })
+keymap("n", "<A-j>", "<C-w>j", {
+	desc = "Move to lower window",
+})
 
--- Make C files and run them
-vim.keymap.set("n", "<leader>rc", function()
-	vim.cmd("w")
-	vim.cmd("vsplit term://make run")
-	vim.cmd("startinsert")
-end, { silent = true })
+keymap("n", "<A-k>", "<C-w>k", {
+	desc = "Move to upper window",
+})
+
+keymap("n", "<A-l>", "<C-w>l", {
+	desc = "Move to right window",
+})
+
+
+-- Insert mode
+-- <C-\><C-n> leaves insert/terminal mode before moving.
+keymap("i", "<A-h>", "<C-\\><C-n><C-w>h", {
+	desc = "Move to left window",
+})
+
+keymap("i", "<A-j>", "<C-\\><C-n><C-w>j", {
+	desc = "Move to lower window",
+})
+
+keymap("i", "<A-k>", "<C-\\><C-n><C-w>k", {
+	desc = "Move to upper window",
+})
+
+keymap("i", "<A-l>", "<C-\\><C-n><C-w>l", {
+	desc = "Move to right window",
+})
+
+
+-- Terminal mode
+keymap("t", "<A-h>", "<C-\\><C-n><C-w>h", {
+	desc = "Move to left window",
+})
+
+keymap("t", "<A-j>", "<C-\\><C-n><C-w>j", {
+	desc = "Move to lower window",
+})
+
+keymap("t", "<A-k>", "<C-\\><C-n><C-w>k", {
+	desc = "Move to upper window",
+})
+
+keymap("t", "<A-l>", "<C-\\><C-n><C-w>l", {
+	desc = "Move to right window",
+})
+
+
+-- =========================================
+-- BUFFERS
+-- =========================================
+
+keymap("n", "<Tab>", "<cmd>bnext<CR>", {
+	desc = "Next buffer",
+})
+
+keymap("n", "<S-Tab>", "<cmd>bprevious<CR>", {
+	desc = "Previous buffer",
+})
+
+
+-- =========================================
+-- TERMINAL
+-- =========================================
+
+keymap("t", "<Esc>", "<C-\\><C-n>", {
+	desc = "Exit terminal mode",
+})
+
+
+-- =========================================
+-- RUN PYTHON
+-- =========================================
+
+keymap("n", "<leader>rp", "<cmd>w<CR><cmd>!python3 %<CR>", {
+	desc = "Run Python file",
+})
+

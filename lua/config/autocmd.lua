@@ -12,19 +12,6 @@ autocmd("TextYankPost", {
 	end,
 })
 
--- Automatically delete temporary C binaries
-autocmd({ "BufDelete", "VimLeavePre" }, {
-	group = custom_group,
-	pattern = "*.temp",
-	callback = function()
-		local temp_bin = vim.fn.expand("%:p:r") .. ".temp"
-
-		if vim.fn.filereadable(temp_bin) == 1 then
-			vim.fn.delete(temp_bin)
-		end
-	end,
-})
-
 autocmd("BufReadPost", {
 	group = custom_group,
 	callback = function(args)
